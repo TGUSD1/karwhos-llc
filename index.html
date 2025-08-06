@@ -231,24 +231,86 @@
     transform: rotate(-45deg) translate(7px, -6px);
 }
 
-/* Navigation Menu Styles */
+/* Desktop Navigation (always visible by default) */
 nav {
-    position: fixed;
-    top: 80px;
-    left: 0;
-    width: 100%;
-    background-color: var(--white);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    transform: translateY(-150%);
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 1000;
+    display: block;
 }
 
-nav.show {
-    transform: translateY(0);
-    opacity: 1;
+nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+}
+
+nav ul li a {
+    color: var(--dark);
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+nav ul li a:hover {
+    color: var(--secondary);
+}
+
+/* Mobile Menu Button (hidden on desktop) */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.mobile-menu-btn .bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    background: var(--primary);
+    margin: 5px 0;
+    transition: 0.3s;
+}
+
+/* Mobile Styles (applies only below 768px) */
+@media (max-width: 768px) {
+    /* Hide desktop nav on mobile */
+    nav {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: var(--white);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        padding: 20px;
+        transform: translateY(-150%);
+        opacity: 0;
+        transition: 0.3s;
+    }
+    
+    nav.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    
+    nav ul {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    /* Show mobile button */
+    .mobile-menu-btn {
+        display: block;
+    }
+    
+    /* Hamburger to X animation */
+    .mobile-menu-btn.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .mobile-menu-btn.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+    .mobile-menu-btn.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
 }
 
 /* Show mobile menu button on small screens */
@@ -1027,7 +1089,7 @@ nav.show {
 </head>
 <body>
     <!-- Header -->
-    <header id="header">
+   <header id="header">
     <div class="container header-container">
         <div class="logo">
             <img src="./img/logo.jpg" alt="Karwhos LLC Logo">
@@ -1036,6 +1098,8 @@ nav.show {
                 <p>Professional Services You Can Trust</p>
             </div>
         </div>
+        
+        <!-- Navigation -->
         <nav id="navMenu">
             <ul>
                 <li><a href="#home">Home</a></li>
@@ -1046,10 +1110,12 @@ nav.show {
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
-        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle navigation menu">
-            <span class="menu-icon"></span>
-            <span class="menu-icon"></span>
-            <span class="menu-icon"></span>
+        
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+            <span class="bar"></span>
+            <span class="bar"></span>
+            <span class="bar"></span>
         </button>
     </div>
 </header>
